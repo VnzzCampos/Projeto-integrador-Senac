@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/Style.css">
+    <title> Login EBD </title>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+
+    <form action="/login" method="post">
+
+        <label for="email"> E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Digite seu E-mail..." required>
+
+        <label for="senha"> senha</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua Senha..." required>
+
+
+        <button type="submit">Entrar</button>
+        <a href="/registro">Não possui conta? Clique aqui para se registrar</a>
+    </form>
+  </div>
+  <script src="../static/js/script.js"></script>
+</body>
+</html>

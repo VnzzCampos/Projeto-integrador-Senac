@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/Style.css">
+    <title> Registro EBD </title>
+</head>
+<body>
+  <div class="container">
+    <h1>Criar Conta</h1>
+
+    <form action="/registro" method="post">
+        
+        <label for="nome">Nome Completo</label>
+        <input type="text" name="nome" id="nome" placeholder="nome" required>
+        <p id="nomeIn"></p>
+
+        <label for="email"> E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Digite seu E-mail..." required>
+
+        <label for="telefone">Telefone</label>
+        <input type="tel" name="telefone" id="telefone" placeholder="(63) 99999-9999">
+
+        <label for="nascimento"> Data de nascimento</label>
+        <input type="date" name="nascimento" id="nascimento" required>
+
+        <p id="nascimentoIn"></p>
+
+        <label for="senha"> senha</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua Senha..." required>
+
+        <p id="tamanhoIn"></p>
+        <p id="forcaSenha"></p>
+        <p id="numeroIn"></p>
+        <p id="maiusculaIn"></p>
+        <p id="minusculaIn"></p>
+        <p id="simboloIn"></p>
+        
+
+        <label for="confirmar">confirmar senha</label>
+        <input type="password" name="confirmar" id="confirmar" placeholder="Confirme sua senha" required>
+        <p id="mensagemSenha"></p>
+
+
+
+
+        <button type="submit" id="btnCriar">Criar conta</button>
+        <a href="/">Já possui conta? Clique aqui para entrar </a>
+    </form>
+  </div>
+  <script src="../static/js/script.js"></script>
+</body>
+</html>
