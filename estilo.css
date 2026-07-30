@@ -1,0 +1,91 @@
+body{
+    background-color: #94a3b5;
+}
+
+
+/* Remove margens padrão */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Barra de navegação */
+.navbar{
+    width: 100%;
+    height: 60px;
+    background-color: #1f1f1f;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Menu hambúrguer */
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.menu span{
+    width: 100%;
+    height: 4px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+/* Título */
+.navbar h2{
+    color: white;
+    margin-left: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centraliza na horizontal */
+    gap: 40px;               /* Espaço entre os quadrados */
+    max-width: 800px;        /* Limita a largura para caber 4 por linha */
+    margin: 120px auto;     /* Centraliza o container */
+}
+
+.quadrado{
+    width: 150px;
+    height: 200px;
+    border: 2px solid #000;  /* Apenas o contorno */
+    border-radius: 15px;     /* Cantos arredondados */
+}
+/* Menu lateral */
+
+.menu-lateral{
+    position: fixed;
+    top: 60px;
+    left: -250px;      /* Escondido */
+    width: 220px;
+    height: 100%;
+    background: #222121;
+    transition: 0.3s;
+}
+
+.menu-lateral a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 18px;
+    font-family: Arial, sans-serif;
+}
+
+.menu-lateral a:hover{
+    background: #3c4375;
+}
+
+/* Quando o menu estiver ativo */
+
+.menu-lateral.ativo{
+    left: 0;
+}
+
