@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <link rel="stylesheet" href="/static/css/Style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="menu" onclick="abrirMenu()" aria-label="Abrir menu" role="button" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <h2>front-end</h2>
+    </nav>
+
+    <div id="menuLateral" class="menu-lateral">
+        <a href="/inicio">Início</a>
+        <a href="/perfil">Perfil</a>
+        {% if administrador %}
+        <a href="/alunos/cadastrar">Cadastrar alunos</a>
+        <a href="/gestao">Gestão</a>
+        {% endif %}
+        <a href="#">Cursos</a>
+        <a href="#">Projetos</a>
+        <a href="#">Contato</a>
+        <a href="/">Sair</a>
+    </div>
+
+    <main class="perfil-pagina">
+        <section class="perfil-card" aria-labelledby="titulo-perfil">
+            <div class="perfil-inicial" aria-hidden="true">{{ usuario.nome[0]|upper }}</div>
+            <p class="perfil-legenda">Área do aluno</p>
+            <h1 id="titulo-perfil">Meu Perfil</h1>
+
+            <dl class="perfil-dados">
+                <div><dt>Nome completo</dt><dd>{{ usuario.nome }}</dd></div>
+                <div><dt>E-mail</dt><dd>{{ usuario.email }}</dd></div>
+                <div><dt>Telefone</dt><dd>{{ usuario.telefone or 'Não informado' }}</dd></div>
+                <div><dt>Data de nascimento</dt><dd>{{ usuario.nascimento.strftime('%d/%m/%Y') if usuario.nascimento else 'Não informada' }}</dd></div>
+            </dl>
+        </section>
+    </main>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

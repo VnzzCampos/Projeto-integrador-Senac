@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar aluno</title>
+    <link rel="stylesheet" href="/static/css/Style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="menu" onclick="abrirMenu()" aria-label="Abrir menu" role="button" tabindex="0">
+            <span></span><span></span><span></span>
+        </div>
+        <h2>front-end</h2>
+    </nav>
+
+    <div id="menuLateral" class="menu-lateral">
+        <a href="/inicio">Início</a>
+        <a href="/perfil">Perfil</a>
+        <a href="/alunos/cadastrar">Cadastrar alunos</a>
+        <a href="/gestao">Gestão</a>
+        <a href="#">Cursos</a>
+        <a href="#">Projetos</a>
+        <a href="#">Contato</a>
+        <a href="/">Sair</a>
+    </div>
+
+    <main class="cadastro-aluno-pagina">
+        <section class="cadastro-aluno-card" aria-labelledby="titulo-cadastro">
+            <div class="cadastro-simbolo" aria-hidden="true">+</div>
+            
+            <h1 id="titulo-cadastro">Cadastrar aluno</h1>
+            <p class="cadastro-introducao">Registre os dados iniciais do aluno. O curso será definido posteriormente.</p>
+
+            {% if mensagem %}<p class="mensagem-erro">{{ mensagem }}</p>{% endif %}
+            {% if sucesso %}<p class="mensagem-sucesso">{{ sucesso }}</p>{% endif %}
+
+            <form action="/alunos/cadastrar" method="post">
+                <label for="nome">Nome completo</label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+
+                <label for="nascimento">Data de nascimento</label>
+                <input type="date" id="nascimento" name="nascimento">
+
+                <button type="submit">Cadastrar aluno</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

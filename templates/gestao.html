@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de pessoas</title>
+    <link rel="stylesheet" href="/static/css/Style.css">
+</head>
+<body>
+    <nav class="navbar"><div class="menu" onclick="abrirMenu()" aria-label="Abrir menu" role="button" tabindex="0"><span></span><span></span><span></span></div><h2>front-end</h2></nav>
+    <div id="menuLateral" class="menu-lateral">
+        <a href="/inicio">Início</a><a href="/perfil">Perfil</a><a href="/alunos/cadastrar">Cadastrar alunos</a><a href="/gestao">Gestão</a><a href="#">Cursos</a><a href="#">Projetos</a><a href="#">Contato</a><a href="/">Sair</a>
+    </div>
+
+    <main class="gestao-pagina">
+        <header class="gestao-cabecalho"><p class="perfil-legenda">Administração</p><h1>Gestão de pessoas</h1><p>Promova usuários e gerencie as contas de alunos e professores.</p></header>
+        {% if mensagem %}<p class="mensagem-erro gestao-mensagem">{{ mensagem }}</p>{% endif %}
+        {% if sucesso %}<p class="mensagem-sucesso gestao-mensagem">{{ sucesso }}</p>{% endif %}
+
+        <section class="gestao-bloco" aria-labelledby="titulo-usuarios">
+            <div class="gestao-titulo"><h2 id="titulo-usuarios">Usuários</h2><span>{{ usuarios|length }} cadastrados</span></div>
+            <div class="tabela-responsiva"><table>
+                <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cargo</th><th>Ações</th></tr></thead>
+                <tbody>{% for usuario in usuarios %}<tr>
+                    <td>{{ usuario.nome }}</td><td>{{ usuario.email }}</td><td>{{ usuario.telefone or '—' }}</td><td><span class="cargo cargo-{{ usuario.cargo }}">{{ usuario.cargo }}</span></td>
+                    <td class="acoes">
+                        {% if usuario.cargo != 'administrador' %}<form method="post"><input type="hidden" name="tipo" value="usuario"><input type="hidden" name="acao" value="promover"><input type="hidden" name="id" value="{{ usuario.id }}"><button class="botao-tabela" type="submit">Promover</button></form>{% endif %}
+                        {% if usuario.id != usuario_atual_id %}<form method="post" onsubmit="return confirm('Excluir este usuário?');"><input type="hidden" name="tipo" value="usuario"><input type="hidden" name="acao" value="excluir"><input type="hidden" name="id" value="{{ usuario.id }}"><button class="botao-tabela botao-excluir" type="submit">Excluir</button></form>{% endif %}
+                    </td>
+                </tr>{% else %}<tr><td colspan="5" class="tabela-vazia">Nenhum usuário encontrado.</td></tr>{% endfor %}</tbody>
+            </table></div>
+        </section>
+
+        <section class="gestao-bloco" aria-labelledby="titulo-professores">
+            <div class="gestao-titulo"><h2 id="titulo-professores">Professores</h2><span>{{ professores|length }} cadastrados</span></div>
+            <div class="tabela-responsiva"><table>
+                <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Nascimento</th><th>Ações</th></tr></thead>
+                <tbody>{% for professor in professores %}<tr>
+                    <td>{{ professor.nome }}</td><td>{{ professor.email }}</td><td>{{ professor.telefone or '—' }}</td><td>{{ professor.nascimento.strftime('%d/%m/%Y') if professor.nascimento else '—' }}</td>
+                    <td class="acoes">{% if professor.id != usuario_atual_id %}<form method="post" onsubmit="return confirm('Excluir este professor?');"><input type="hidden" name="tipo" value="usuario"><input type="hidden" name="acao" value="excluir"><input type="hidden" name="id" value="{{ professor.id }}"><button class="botao-tabela botao-excluir" type="submit">Excluir</button></form>{% endif %}</td>
+                </tr>{% else %}<tr><td colspan="5" class="tabela-vazia">Nenhum professor promovido.</td></tr>{% endfor %}</tbody>
+            </table></div>
+        </section>
+    </main>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
