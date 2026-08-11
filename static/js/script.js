@@ -2,8 +2,38 @@ console.log("Sistema iniciado.");
 
 function abrirMenu() {
     const menu = document.getElementById("menuLateral");
-    if (menu) menu.classList.toggle("ativo");
+    const botao = document.querySelector(".menu");
+    if (!menu || !botao) return;
+
+    const aberto = menu.classList.toggle("ativo");
+    botao.classList.toggle("ativo", aberto);
+    botao.setAttribute("aria-expanded", String(aberto));
+    botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
 }
+
+document.querySelectorAll(".menu").forEach((botao) => {
+    botao.setAttribute("aria-expanded", "false");
+    botao.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
+            abrirMenu();
+        }
+    });
+});
+
+document.querySelectorAll('a[href]').forEach((link) => {
+    link.addEventListener("click", (evento) => {
+        const destino = link.getAttribute("href");
+        const mesmaPagina = !destino || destino.startsWith("#") || link.target === "_blank";
+        const cliqueModificado = evento.ctrlKey || evento.metaKey || evento.shiftKey || evento.altKey;
+
+        if (mesmaPagina || cliqueModificado || evento.button !== 0) return;
+
+        evento.preventDefault();
+        document.body.classList.add("pagina-saindo");
+        window.setTimeout(() => { window.location.href = destino; }, 220);
+    });
+});
 
 const senha = document.getElementById("senha");
 const confirmar = document.getElementById("confirmar");

@@ -100,7 +100,7 @@ def login():
         if usuario is None:
             return render_template(
                 "login.html",
-                mensagem="E-mail ou senha incorretos."
+                mensagem="Usuário não encontrado. Verifique o e-mail informado ou cadastre-se."
             )
 
         # Verifica a senha usando o hash
