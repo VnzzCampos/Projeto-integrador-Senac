@@ -18,11 +18,13 @@
         <a href="/inicio">Início</a>
         <a href="/perfil">Perfil</a>
         <a href="/alunos/cadastrar">Cadastrar alunos</a>
+        <a href="/turmas/nova">Turmas</a>
+        <a href="/relatorios/turmas">Relatórios</a>
         <a href="/gestao">Gestão</a>
         <a href="#">Cursos</a>
         <a href="#">Projetos</a>
         <a href="#">Contato</a>
-        <a href="/">Sair</a>
+        <a href="/sair">Sair</a>
     </div>
 
     <main class="cadastro-aluno-pagina">
@@ -30,22 +32,21 @@
             <div class="cadastro-simbolo" aria-hidden="true">+</div>
             
             <h1 id="titulo-cadastro">Cadastrar aluno</h1>
-            <p class="cadastro-introducao">Registre os dados iniciais do aluno. O curso será definido posteriormente.</p>
+            <p class="cadastro-introducao">Selecione uma conta de aluno já existente para vinculá-la ao cadastro de alunos.</p>
 
             {% if mensagem %}<p class="mensagem-erro">{{ mensagem }}</p>{% endif %}
             {% if sucesso %}<p class="mensagem-sucesso">{{ sucesso }}</p>{% endif %}
 
             <form action="/alunos/cadastrar" method="post">
-                <label for="nome">Nome completo</label>
-                <input type="text" id="nome" name="nome" required>
+                <label for="pesquisa-aluno">Pesquisar conta</label>
+                <input type="search" id="pesquisa-aluno" placeholder="Digite nome, e-mail ou telefone" autocomplete="off">
 
-                <label for="telefone">Telefone</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+                <p class="legenda-selecao">Selecione uma ou mais contas</p>
+                <div id="lista-usuarios-aluno" class="lista-contas">
+                    {% for usuario in usuarios %}<label class="conta-checkbox"><input type="checkbox" name="usuarios_ids" value="{{ usuario.id }}"><span>{{ usuario.nome }}</span><small>{{ usuario.email }}{% if usuario.telefone %} · {{ usuario.telefone }}{% endif %}</small></label>{% else %}<p class="tabela-vazia">Nenhuma conta de aluno disponível</p>{% endfor %}
+                </div>
 
-                <label for="nascimento">Data de nascimento</label>
-                <input type="date" id="nascimento" name="nascimento">
-
-                <button type="submit">Cadastrar aluno</button>
+                <button type="submit" {% if not usuarios %}disabled{% endif %}>Vincular aluno</button>
             </form>
         </section>
     </main>

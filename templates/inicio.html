@@ -19,17 +19,33 @@
     <div id="menuLateral" class="menu-lateral">
         <a href="/inicio">Início</a>
         <a href="/perfil">Perfil</a>
+        <a href="/comunicacao">Comunicação</a>
+        <a href="/escala">Escala</a>
+        <a href="/desempenho">Desempenho</a>
+        {% if pode_lancar_frequencia %}<a href="/frequencia">Frequência</a>{% endif %}
         {% if administrador %}
         <a href="/alunos/cadastrar">Cadastrar alunos</a>
+        <a href="/turmas/nova">Turmas</a>
+        <a href="/ofertas">Ofertas</a>
+        <a href="/relatorios/turmas">Relatórios</a>
         <a href="/gestao">Gestão</a>
         {% endif %}
         <a href="#">Cursos</a>
         <a href="#">Projetos</a>
         <a href="#">Contato</a>
-        <a href="/">Sair</a>
+        <a href="/sair">Sair</a>
     </div>
 
-    <main class="container2">
+    <main class="painel-inicio">
+        <header class="boas-vindas">
+            <p class="perfil-legenda">Painel principal</p>
+            <h1>Bem-vindo ao Sistema EBD</h1>
+            <p>Encontre rapidamente as ferramentas que precisa para a sua rotina.</p>
+        </header>
+        <section class="container2" aria-label="Acessos rapidos">
+        <a class="quadrado card-acao" href="/comunicacao"><span class="card-icone">✦</span><span class="card-destaque">Conteúdo</span><strong>Materiais e avisos</strong><small>Central de comunicação</small><span class="card-seta" aria-hidden="true">→</span></a>
+        <a class="quadrado card-acao" href="/escala"><span class="card-icone">◷</span><span class="card-destaque">Planejamento</span><strong>Escala</strong><small>Atividades dos professores</small><span class="card-seta" aria-hidden="true">→</span></a>
+        <a class="quadrado card-acao" href="/desempenho"><span class="card-icone">↑</span><span class="card-destaque">Acompanhamento</span><strong>Desempenho</strong><small>Frequência das turmas</small><span class="card-seta" aria-hidden="true">→</span></a>
         {% if administrador %}
         <a class="quadrado card-acao" href="/alunos/cadastrar">
             <span class="card-icone">+</span>
@@ -45,10 +61,38 @@
             <small>Usuários e professores</small>
             <span class="card-seta" aria-hidden="true">→</span>
         </a>
+        <a class="quadrado card-acao" href="/turmas/nova">
+            <span class="card-icone">+</span>
+            <span class="card-destaque">Organização</span>
+            <strong>Nova turma</strong>
+            <small>Vincular alunos e professores</small>
+            <span class="card-seta" aria-hidden="true">→</span>
+        </a>
+        <a class="quadrado card-acao" href="/relatorios/turmas">
+            <span class="card-icone">≡</span>
+            <span class="card-destaque">Acompanhamento</span>
+            <strong>Relatórios</strong>
+            <small>Frequência por turma</small>
+            <span class="card-seta" aria-hidden="true">→</span>
+        </a>
+        <a class="quadrado card-acao" href="/ofertas">
+            <span class="card-icone">R$</span>
+            <span class="card-destaque">Financeiro</span>
+            <strong>Ofertas</strong>
+            <small>Controle ilustrativo por turma</small>
+            <span class="card-seta" aria-hidden="true">→</span>
+        </a>
         {% endif %}
-        <div class="quadrado"></div>
-        <div class="quadrado"></div>
-        <div class="quadrado"></div>
+        {% if pode_lancar_frequencia %}
+        <a class="quadrado card-acao" href="/frequencia">
+            <span class="card-icone">✓</span>
+            <span class="card-destaque">Sala de aula</span>
+            <strong>Frequência</strong>
+            <small>Registrar presença dos alunos</small>
+            <span class="card-seta" aria-hidden="true">→</span>
+        </a>
+        {% endif %}
+        </section>
     </main>
 
     <script src="/static/js/script.js"></script>

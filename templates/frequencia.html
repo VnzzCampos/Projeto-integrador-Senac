@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequência</title>
+    <link rel="stylesheet" href="/static/css/Style.css">
+</head>
+<body>
+    <nav class="navbar"><div class="menu" onclick="abrirMenu()" aria-label="Abrir menu" role="button" tabindex="0"><span></span><span></span><span></span></div><h2>Sistema EBD</h2></nav>
+    <div id="menuLateral" class="menu-lateral">
+        <a href="/inicio">Início</a><a href="/perfil">Perfil</a><a href="/frequencia">Frequência</a>
+        {% if administrador %}<a href="/alunos/cadastrar">Cadastrar alunos</a><a href="/turmas/nova">Turmas</a><a href="/relatorios/turmas">Relatórios</a><a href="/gestao">Gestão</a>{% endif %}
+        <a href="#">Cursos</a><a href="#">Projetos</a><a href="#">Contato</a><a href="/sair">Sair</a>
+    </div>
+    <main class="frequencia-pagina">
+        <header class="gestao-cabecalho"><p class="perfil-legenda">Registro de aula</p><h1>Frequência dos alunos</h1><p>Marque a presença ou falta de cada aluno e salve o lançamento da data selecionada.</p></header>
+        {% if sucesso %}<p class="mensagem-sucesso gestao-mensagem">{{ sucesso }}</p>{% endif %}
+        <form method="get" class="filtro-data">
+            <div><label for="turma">Turma</label><select id="turma" name="turma" required><option value="">Selecione uma turma</option>{% for item in turmas %}<option value="{{ item.id }}" {% if item.id == turma_id %}selected{% endif %}>{{ item.nome }}</option>{% endfor %}</select></div><div><label for="data">Data da aula</label><input id="data" name="data" type="date" value="{{ data_aula }}"></div><button class="botao-tabela" type="submit">Consultar</button>
+        </form>
+        <form method="post" class="frequencia-formulario">
+            <input type="hidden" name="data" value="{{ data_aula }}">
+            <input type="hidden" name="turma" value="{{ turma_id }}">
+            <section class="gestao-bloco">
+                <div class="gestao-titulo"><h2>{% if turma %}{{ turma.nome }}{% else %}Alunos{% endif %}</h2><span>{{ alunos|length }} vinculados</span></div>
+                <div class="tabela-responsiva"><table>
+                    <thead><tr><th>Aluno</th><th>Telefone</th><th>Status</th></tr></thead>
+                    <tbody>{% for aluno in alunos %}<tr>
+                        <td>{{ aluno.nome }}</td><td>{{ aluno.telefone or '—' }}</td>
+                        <td><div class="status-frequencia">
+                            <label><input type="radio" name="status_{{ aluno.id }}" value="presente" {% if aluno.status != 'falta' %}checked{% endif %}> Presente</label>
+                            <label><input type="radio" name="status_{{ aluno.id }}" value="falta" {% if aluno.status == 'falta' %}checked{% endif %}> Falta</label>
+                        </div></td>
+                    </tr>{% else %}<tr><td colspan="3" class="tabela-vazia">{% if turmas %}Nenhum aluno vinculado a esta turma.{% else %}Nenhuma turma disponível para você.{% endif %}</td></tr>{% endfor %}</tbody>
+                </table></div>
+            </section>
+            {% if alunos %}<button class="botao-salvar-frequencia" type="submit">Salvar frequência</button>{% endif %}
+        </form>
+    </main>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

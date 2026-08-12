@@ -9,22 +9,23 @@
 <body>
     <nav class="navbar"><div class="menu" onclick="abrirMenu()" aria-label="Abrir menu" role="button" tabindex="0"><span></span><span></span><span></span></div><h2>Sistema EBD</h2></nav>
     <div id="menuLateral" class="menu-lateral">
-        <a href="/inicio">Início</a><a href="/perfil">Perfil</a><a href="/alunos/cadastrar">Cadastrar alunos</a><a href="/gestao">Gestão</a><a href="#">Cursos</a><a href="#">Projetos</a><a href="#">Contato</a><a href="/">Sair</a>
+        <a href="/inicio">Início</a><a href="/perfil">Perfil</a><a href="/alunos/cadastrar">Cadastrar alunos</a><a href="/turmas/nova">Turmas</a><a href="/relatorios/turmas">Relatórios</a><a href="/gestao">Gestão</a><a href="#">Cursos</a><a href="#">Projetos</a><a href="#">Contato</a><a href="/sair">Sair</a>
     </div>
 
     <main class="gestao-pagina">
         <header class="gestao-cabecalho"><p class="perfil-legenda">Administração</p><h1>Gestão de pessoas</h1><p>Promova usuários e gerencie as contas de alunos e professores.</p></header>
+        {% if usuario_atual %}<div class="conta-atual"><span>Conta em uso</span><strong>{{ usuario_atual.nome }}</strong><small>{{ usuario_atual.email }} · {{ usuario_atual.cargo }}</small></div>{% endif %}
         {% if mensagem %}<p class="mensagem-erro gestao-mensagem">{{ mensagem }}</p>{% endif %}
         {% if sucesso %}<p class="mensagem-sucesso gestao-mensagem">{{ sucesso }}</p>{% endif %}
 
         <section class="gestao-bloco" aria-labelledby="titulo-usuarios">
             <div class="gestao-titulo"><h2 id="titulo-usuarios">Usuários</h2><span>{{ usuarios|length }} cadastrados</span></div>
+            <div class="busca-tabela"><label for="pesquisa-usuarios">Pesquisar usuários</label><input type="search" id="pesquisa-usuarios" placeholder="Nome, e-mail, telefone ou cargo" autocomplete="off"></div>
             <div class="tabela-responsiva"><table>
                 <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cargo</th><th>Ações</th></tr></thead>
                 <tbody>{% for usuario in usuarios %}<tr>
-                    <td>{{ usuario.nome }}</td><td>{{ usuario.email }}</td><td>{{ usuario.telefone or '—' }}</td><td><span class="cargo cargo-{{ usuario.cargo }}">{{ usuario.cargo }}</span></td>
+                    <td>{{ usuario.nome }} {% if usuario.id == usuario_atual_id %}<span class="marcador-conta">Você</span>{% endif %}</td><td>{{ usuario.email }}</td><td>{{ usuario.telefone or '—' }}</td><td><div class="menu-cargo"><button class="cargo cargo-{{ usuario.cargo }} usuario-menu" type="button" aria-expanded="false" aria-haspopup="true">{{ usuario.cargo }} <span aria-hidden="true">⌄</span></button><form method="post" class="opcoes-cargo"><input type="hidden" name="tipo" value="usuario"><input type="hidden" name="acao" value="definir_cargo"><input type="hidden" name="id" value="{{ usuario.id }}"><button type="submit" name="cargo" value="aluno" class="opcao-cargo">Definir como aluno</button><button type="submit" name="cargo" value="professor" class="opcao-cargo">Definir como professor</button></form></div></td>
                     <td class="acoes">
-                        {% if usuario.cargo != 'administrador' %}<form method="post"><input type="hidden" name="tipo" value="usuario"><input type="hidden" name="acao" value="promover"><input type="hidden" name="id" value="{{ usuario.id }}"><button class="botao-tabela" type="submit">Promover</button></form>{% endif %}
                         {% if usuario.id != usuario_atual_id %}<form method="post" onsubmit="return confirm('Excluir este usuário?');"><input type="hidden" name="tipo" value="usuario"><input type="hidden" name="acao" value="excluir"><input type="hidden" name="id" value="{{ usuario.id }}"><button class="botao-tabela botao-excluir" type="submit">Excluir</button></form>{% endif %}
                     </td>
                 </tr>{% else %}<tr><td colspan="5" class="tabela-vazia">Nenhum usuário encontrado.</td></tr>{% endfor %}</tbody>

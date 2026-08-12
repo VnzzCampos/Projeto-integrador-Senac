@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova turma | Sistema EBD</title>
+    <link rel="stylesheet" href="/static/css/Style.css">
+</head>
+<body>
+    <nav class="navbar"><div class="menu" onclick="abrirMenu()" aria-label="Abrir menu" role="button" tabindex="0"><span></span><span></span><span></span></div><h2>Sistema EBD</h2></nav>
+    <div id="menuLateral" class="menu-lateral">
+        <a href="/inicio">Início</a><a href="/perfil">Perfil</a><a href="/alunos/cadastrar">Cadastrar alunos</a><a href="/turmas/nova">Turmas</a><a href="/relatorios/turmas">Relatórios</a><a href="/gestao">Gestão</a><a href="/sair">Sair</a>
+    </div>
+    <main class="turma-pagina">
+        <header class="gestao-cabecalho"><p class="perfil-legenda">Organização acadêmica</p><h1>Criar nova turma</h1><p>Defina a turma e vincule os professores e alunos que farão parte dela.</p></header>
+        {% if mensagem %}<p class="mensagem-erro gestao-mensagem">{{ mensagem }}</p>{% endif %}
+        {% if sucesso %}<p class="mensagem-sucesso gestao-mensagem">{{ sucesso }}</p>{% endif %}
+        <form method="post" class="turma-formulario">
+            <section class="turma-dados">
+                <div><label for="nome">Nome da turma</label><input id="nome" name="nome" placeholder="Ex.: Jovens - Domingo" required></div>
+                <div><label for="descricao">Descrição</label><input id="descricao" name="descricao" placeholder="Ex.: Sala 2, 09h"></div>
+            </section>
+            <section class="selecao-participantes">
+                <div class="gestao-titulo"><h2>Professor(es)</h2><span>Selecione ao menos um</span></div>
+                <div class="lista-selecao">
+                    {% for professor in professores %}<label class="item-selecao"><input type="checkbox" name="professores" value="{{ professor.id }}"><span>{{ professor.nome }}</span></label>{% else %}<p class="tabela-vazia">Nenhum professor disponível. Promova um usuário na Gestão.</p>{% endfor %}
+                </div>
+            </section>
+            <section class="selecao-participantes">
+                <div class="gestao-titulo"><h2>Alunos</h2><span>Seleção opcional</span></div>
+                <div class="lista-selecao lista-alunos">
+                    {% for aluno in alunos %}<label class="item-selecao"><input type="checkbox" name="alunos" value="{{ aluno.id }}"><span>{{ aluno.nome }}</span><small>{{ aluno.telefone or 'Sem telefone' }}</small></label>{% else %}<p class="tabela-vazia">Cadastre alunos antes de montar uma turma.</p>{% endfor %}
+                </div>
+            </section>
+            <button class="botao-salvar-frequencia" type="submit">Criar turma</button>
+        </form>
+    </main>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
